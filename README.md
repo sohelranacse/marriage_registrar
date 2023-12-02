@@ -14,11 +14,6 @@ Before running the scripts, ensure that you have Node.js and npm installed on yo
 # Install dependencies
 npm install
 
-
-```bash
-# Install dependencies
 node index.mjs
 
-```bash
-# Install dependencies
 node city.mjs
