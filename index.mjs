@@ -2,9 +2,31 @@ import puppeteer from 'puppeteer';
 import { createObjectCsvWriter } from 'csv-writer';
 import inquirer from 'inquirer';
 
+// List of labeled links
+const labeledLinks = [
+  { label: 'Full List', url: 'https://marriage.gov.bd/nikahregistrar/bivag/1' },
+  { label: 'Muslim Marriage', url: 'https://marriage.gov.bd/nikahregistrar/bivag/2' },
+  { label: 'Hindu Marriage', url: 'https://marriage.gov.bd/nikahregistrar/bivag/3' },
+];
+
+// Prompt user to select a labeled link
+const linkPrompt = await inquirer.prompt([
+  {
+    type: 'list',
+    name: 'selectedLink',
+    message: 'Select a link:',
+    choices: labeledLinks.map(item => ({ name: `${item.label}: ${item.url}`, value: item.url })),
+  },
+]);
+
+// Use the selected link
+const url = linkPrompt.selectedLink;
+// const url = 'https://marriage.gov.bd/nikahregistrar/bivag/2';
+
 // Initial CSV Writer
+const selectedLabel = labeledLinks.find(item => item.url === url)?.label;
 const csvWriter = createObjectCsvWriter({
-  path: 'raw_data/new.csv',
+  path: `raw_data/${selectedLabel}.csv`,
   header: [
     { id: 'name', title: 'Name' },
     { id: 'address', title: 'Address' },
@@ -29,27 +51,6 @@ const dataRow = {
 const records = [dataRow];
 csvWriter.writeRecords(records);
 // Initially Inserted Header Row
-
-// List of labeled links
-const labeledLinks = [
-  { label: 'Full List', url: 'https://marriage.gov.bd/nikahregistrar/bivag/1' },
-  { label: 'Muslim Marriage', url: 'https://marriage.gov.bd/nikahregistrar/bivag/2' },
-  { label: 'Hindu Marriage', url: 'https://marriage.gov.bd/nikahregistrar/bivag/3' },
-];
-
-// Prompt user to select a labeled link
-const linkPrompt = await inquirer.prompt([
-  {
-    type: 'list',
-    name: 'selectedLink',
-    message: 'Select a link:',
-    choices: labeledLinks.map(item => ({ name: `${item.label}: ${item.url}`, value: item.url })),
-  },
-]);
-
-// Use the selected link
-const url = linkPrompt.selectedLink;
-// const url = 'https://marriage.gov.bd/nikahregistrar/bivag/2';
 
 const browser = await puppeteer.launch({ headless: "new", defaultViewport: { width: 1366, height: 500 } }); // new, false
 const page = await browser.newPage();
