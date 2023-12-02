@@ -14,6 +14,8 @@ Before running the scripts, ensure that you have Node.js and npm installed on yo
 # Install dependencies
 npm install
 
+# Get Full list/Muslim Registrar/Hindu Registrar List
 node index.mjs
 
+# Get City Corporation Marriage Registrar List
 node city.mjs
