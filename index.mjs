@@ -30,11 +30,12 @@ const csvWriter = createObjectCsvWriter({
   header: [
     { id: 'name', title: 'Name' },
     { id: 'address', title: 'Address' },
-    { id: 'mobileNumber', title: 'Mobile Number' },
-    { id: 'coverageArea', title: 'Coverage Area' },
+    { id: 'permanentAddress', title: 'PermanentAddress' },
+    { id: 'mobileNumber', title: 'MobileNumber' },
+    { id: 'coverageArea', title: 'CoverageArea' },
     { id: 'nid', title: 'NID' },
     { id: 'email', title: 'Email' },
-    { id: 'dateOfBirth', title: 'Date of Birth' },
+    { id: 'dateOfBirth', title: 'DateofBirth' },
   ],
   append: true, // Append to the existing file
   encoding: 'utf-8',
@@ -42,6 +43,7 @@ const csvWriter = createObjectCsvWriter({
 const dataRow = {
   name: 'Name',
   address: 'Address',
+  permanentAddress: 'PermanentAddress',
   mobileNumber: 'Mobile Number',
   coverageArea: 'Coverage Area',
   nid: 'NID',
@@ -206,7 +208,7 @@ for (const option of options) {
             continue;
           }
 
-          const rowIndexes = [1, 19, 7, 4, 9, 8, 5];
+          const rowIndexes = [1, 19, 18, 7, 4, 9, 8, 5];
           const tableElements = await page.evaluate(() => {
             const tableElement = document.querySelector('table');
             const tableRows = tableElement ? tableElement.querySelectorAll('tr') : [];
@@ -218,16 +220,18 @@ for (const option of options) {
 
           let name = selectedRows[0][0] || '';
           let address = selectedRows[1][0] || '';
-          let mobileNumber = selectedRows[2][0] || '';
-          let coverageArea = selectedRows[3][0] || '';
-          let nid = selectedRows[4][0] || '';
-          let email = selectedRows[5][0] || '';
-          let dateOfBirth = selectedRows[6][0] || '';
+          let permanentAddress = selectedRows[2][0] || '';
+          let mobileNumber = selectedRows[3][0] || '';
+          let coverageArea = selectedRows[4][0] || '';
+          let nid = selectedRows[5][0] || '';
+          let email = selectedRows[6][0] || '';
+          let dateOfBirth = selectedRows[7][0] || '';
 
           // Insert Row
           const dataRow = {
             name,
             address,
+            permanentAddress,
             mobileNumber,
             coverageArea,
             nid,
